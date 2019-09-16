@@ -7,7 +7,7 @@
 This package is installable and autoloadable via Composer.
 
 ```sh
-composer require template-interop/latte-adapter
+$ composer require template-interop/latte-adapter
 ```
 
 ## Usage
