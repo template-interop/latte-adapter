@@ -6,7 +6,7 @@ use Interop\Template\TemplateEngineInterface;
 use Interop\Template\Exception\TemplateNotFound;
 use Interop\Template\Exception\TemplateExceptionInterface;
 use Latte\Engine as Latte;
-use Exception;
+use Exception, RuntimeException;
 
 final class LatteEngine implements TemplateEngineInterface
 {
@@ -16,7 +16,7 @@ final class LatteEngine implements TemplateEngineInterface
     /** @var string */
     private $suffix;
 
-    public function __construct(Latte $latte, string $suffix = '')
+    public function __construct(Latte $latte, string $suffix = '.latte')
     {
         $this->latte   = $latte;
         $this->suffix = $suffix;
@@ -36,6 +36,9 @@ final class LatteEngine implements TemplateEngineInterface
             if (strpos($e->getMessage(), 'Missing template') === 0) {
                 throw TemplateNotFound::fromName($templateName, 0, $e);
             }
+
+            // Cast exception to template-interop one
+            throw new class($e->getMessage(), $e->getCode(), $e) extends RuntimeException implements TemplateExceptionInterface {};
          }
     }
 }

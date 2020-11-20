@@ -14,7 +14,7 @@ final class LatteEngineTest extends TestCase
         $latte = new Latte;
         $latte->setLoader(new FileLoader(__DIR__.'/templates/'));
 
-        $engine = new LatteEngine($latte, '.latte');
+        $engine = new LatteEngine($latte);
         $html = $engine->render('hello', ['name' => 'John']);
 
         $this->assertStringEqualsFile(__DIR__ . '/templates/expected.html', $html);

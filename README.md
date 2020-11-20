@@ -16,11 +16,11 @@ $ composer require template-interop/latte-adapter
 <?php
 
 use Interop\Template\Latte\LatteEngine;
-use Interop\Template\TemplateEngineInterface;
 
-$latte = Latte\Engine;
-$engine = new LatteEngine($latte, '.latte');
-$engine->render('greeting', ['name' => 'John']);
+$latte = new Latte\Engine;
+$latte->setLoader(new Latte\Loaders\FileLoader(__DIR__.'/templates'));
+$engine = new LatteEngine($latte);
+echo $engine->render('greeting', ['name' => 'John']);
 ```
 
 You can also use it in conjunction with [template-interop/middleware](https://github.com/template-interop/middleware)
